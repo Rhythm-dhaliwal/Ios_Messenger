@@ -14,6 +14,18 @@ class Convo_Ctrl: UIViewController {
         view.backgroundColor = .systemMint
         
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let IsLoggedIn = UserDefaults.standard.bool(forKey: "Logged_in")
+        
+        if(!IsLoggedIn){
+            let vc = Login_Ctrl()
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true)
+        }
+    }
 
 
 }
