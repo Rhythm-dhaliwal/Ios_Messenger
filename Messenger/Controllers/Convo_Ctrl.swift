@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class Convo_Ctrl: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
