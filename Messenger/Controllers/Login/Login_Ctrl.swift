@@ -14,14 +14,12 @@ class Login_Ctrl: UIViewController {
         
         view.backgroundColor = .white
         title = "Log In"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .plain,target: self,action: #selector(didTapRegister))
-            
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(didTapRegister))
         }
     @objc private func didTapRegister(){
         let vc = Register_Ctrl()
         vc.title = "Create Account"
         navigationController?.pushViewController(vc, animated: true)
-        
     }
     
 }
