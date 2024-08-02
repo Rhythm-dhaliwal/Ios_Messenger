@@ -13,5 +13,6 @@ class Register_Ctrl: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
+        title = "Create Account"
     }
 }

@@ -17,6 +17,8 @@ class Convo_Ctrl: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        
+        
         let IsLoggedIn = UserDefaults.standard.bool(forKey: "Logged_in")
         
         if(!IsLoggedIn){
