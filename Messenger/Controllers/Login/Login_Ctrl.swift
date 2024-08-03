@@ -40,6 +40,7 @@ class Login_Ctrl: UIViewController {
        let field = UITextField()
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
+        field.returnKeyType = .done
         field.placeholder = "Password..."
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
@@ -47,6 +48,17 @@ class Login_Ctrl: UIViewController {
         field.returnKeyType = .continue
         field.isSecureTextEntry = true
         return field
+    }()
+    
+    private let Login_button: UIButton = {
+      let button = UIButton()
+        button.setTitle("Log In", for: .normal)
+        button.backgroundColor = .systemGreen
+        button.layer.cornerRadius = 12
+        button.setTitleColor(.white, for: .normal)
+        button.layer.masksToBounds = true
+        button.titleLabel?.font = .systemFont(ofSize: 20,weight: .bold)
+        return button
     }()
     
     override func viewDidLoad() {
@@ -65,6 +77,7 @@ class Login_Ctrl: UIViewController {
         scrollView.addSubview(imageView)
         scrollView.addSubview(emailField)
         scrollView.addSubview(password)
+        scrollView.addSubview(Login_button)
         scrollView.frame = view.bounds
        
     }
@@ -85,6 +98,11 @@ class Login_Ctrl: UIViewController {
                                 y: emailField.bottom+10,
                                 width: scrollView.width-60,
                                 height: 52)
+        
+        Login_button.frame = CGRect(x: 30,
+                                     y: password.bottom+10,
+                                     width: scrollView.width-60,
+                                     height: 52)
         
     }
    
