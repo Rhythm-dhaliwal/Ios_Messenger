@@ -36,7 +36,7 @@ class Login_Ctrl: UIViewController {
     }()
     
     //password input
-    private let password : UITextField = {
+    private let passwordField : UITextField = {
        let field = UITextField()
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
@@ -57,7 +57,7 @@ class Login_Ctrl: UIViewController {
         button.layer.cornerRadius = 12
         button.setTitleColor(.white, for: .normal)
         button.layer.masksToBounds = true
-        button.titleLabel?.font = .systemFont(ofSize: 20,weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         return button
     }()
     
@@ -72,19 +72,24 @@ class Login_Ctrl: UIViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didTapRegister))
+        
+        Login_button.addTarget(self, action: #selector(LoginButtonTapped), for: .touchUpInside)
+        emailField.delegate = self
+        passwordField.delegate = self
         //Add SubViews
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
         scrollView.addSubview(emailField)
-        scrollView.addSubview(password)
+        scrollView.addSubview(passwordField)
         scrollView.addSubview(Login_button)
         scrollView.frame = view.bounds
+        
        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let size = view.width/2
-        imageView.frame = CGRect(x: (view.width-size)/2,
+        imageView.frame = CGRect(x: (view.width)/4,
                                  y: 20,
                                  width: size,
                                  height: size)
@@ -94,21 +99,54 @@ class Login_Ctrl: UIViewController {
                                   width: scrollView.width-60,
                                   height: 52)
         
-        password.frame = CGRect(x: 30,
+        passwordField.frame = CGRect(x: 30,
                                 y: emailField.bottom+10,
                                 width: scrollView.width-60,
                                 height: 52)
         
         Login_button.frame = CGRect(x: 30,
-                                     y: password.bottom+10,
+                                     y: passwordField.bottom+10,
                                      width: scrollView.width-60,
                                      height: 52)
         
     }
-   
+    
+    //Login Button
+    @objc private func LoginButtonTapped(){
+        guard let email = emailField.text, let password = passwordField.text,
+              !email.isEmpty,!password.isEmpty,password.count >= 6 else {
+                AlertLogin()
+            return
+        }
+    
+    }
+    
+    //Login Alert
+    func AlertLogin(){
+        let alert = UIAlertController(title: "Wrong password", message: "The password you have entered is wrong. Please try again.", preferredStyle: .alert)
+        
+        present(alert,animated: true)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+       
+    }
+    //Register
     @objc private func didTapRegister(){
         let vc = Register_Ctrl()
 
         navigationController?.pushViewController(vc, animated: true)
     }
+}
+
+extension Login_Ctrl :UITextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailField{
+            passwordField.becomeFirstResponder()
+        }
+        else if textField == passwordField{
+            LoginButtonTapped()
+        }
+        return true
+    }
+    
 }
