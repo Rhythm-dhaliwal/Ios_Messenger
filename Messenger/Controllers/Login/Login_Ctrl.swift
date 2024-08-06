@@ -74,8 +74,8 @@ class Login_Ctrl: UIViewController {
                                                             action: #selector(didTapRegister))
         
         Login_button.addTarget(self, action: #selector(LoginButtonTapped), for: .touchUpInside)
-        emailField.delegate = self
-        passwordField.delegate = self
+        //emailField.delegate = self
+        //passwordField.delegate = self
         //Add SubViews
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
@@ -137,17 +137,17 @@ class Login_Ctrl: UIViewController {
     }
 }
 
-extension Login_Ctrl :UITextFieldDelegate{
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailField{
-            passwordField.becomeFirstResponder()
-        }
-        else if textField == passwordField{
-            LoginButtonTapped()
-            textField.resignFirstResponder()
-        }
-        return true
-    }
-    
-}
+//extension Login_Ctrl :UITextFieldDelegate{
+//    
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        if textField == emailField{
+//            passwordField.becomeFirstResponder()
+//        }
+//        else if textField == passwordField{
+//            LoginButtonTapped()
+//            textField.resignFirstResponder()
+//        }
+//        return true
+//    }
+//    
+//}

@@ -24,21 +24,19 @@ class Register_Ctrl: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "Create Account"
-        
-        // SubViews
+        //Add SubViews
         
         view.addSubview(imageView)
         view.addSubview(background)
         view.sendSubviewToBack(background)
-        
+       
     }
     override func viewDidLayoutSubviews(){
         let size = view.width/2
         imageView.frame = CGRect(x: (view.width)/4, y: 120, width: size, height: size)
-        
         background.frame = self.view.bounds
+        
         
         
    }
