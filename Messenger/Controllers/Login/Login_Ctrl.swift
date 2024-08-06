@@ -145,6 +145,7 @@ extension Login_Ctrl :UITextFieldDelegate{
         }
         else if textField == passwordField{
             LoginButtonTapped()
+            textField.resignFirstResponder()
         }
         return true
     }

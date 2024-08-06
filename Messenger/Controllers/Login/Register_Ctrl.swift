@@ -15,21 +15,30 @@ class Register_Ctrl: UIViewController {
         return imageView
     }()
     
+    private let background: UIImageView = {
+        let background = UIImageView(image: UIImage(named: "background"))
+        background.contentMode = .scaleAspectFill
+        
+        return background
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        view.backgroundColor = .white
         title = "Create Account"
         
         // SubViews
         
         view.addSubview(imageView)
+        view.addSubview(background)
+        view.sendSubviewToBack(background)
         
     }
     override func viewDidLayoutSubviews(){
         let size = view.width/2
         imageView.frame = CGRect(x: (view.width)/4, y: 120, width: size, height: size)
+        
+        background.frame = self.view.bounds
         
         
    }
