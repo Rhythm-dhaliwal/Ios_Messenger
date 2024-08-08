@@ -64,9 +64,20 @@ class Register_Ctrl: UIViewController {
         password.layer.borderColor = UIColor.black.cgColor
         password.textColor = .lightGray
         password.layer.borderWidth = 0.5
+        password.isSecureTextEntry = true
         let placeholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         password.attributedPlaceholder = placeholder
         return password
+    }()
+    
+    private let Ca_button: UIButton = {
+       let button = UIButton()
+        button.setTitle("Continue", for: .normal)
+        button.backgroundColor = .link
+        button.layer.cornerRadius = 12
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        return button
     }()
     
     
@@ -77,6 +88,8 @@ class Register_Ctrl: UIViewController {
         EmailField.delegate = self
         UsernameField.delegate = self
         passwordField.delegate = self
+        
+        Ca_button.addTarget(self, action: #selector(createAccountButtonTapped), for: .touchUpInside)
         //Add SubViews
         
         view.frame = view.bounds
@@ -86,9 +99,21 @@ class Register_Ctrl: UIViewController {
         view.addSubview(EmailField)
         view.addSubview(UsernameField)
         view.addSubview(passwordField)
+        view.addSubview(Ca_button)
     }
     
+    @objc func createAccountButtonTapped(){
+        guard let email = EmailField.text , let username = UsernameField.text
+                ,let password = passwordField.text,!email.isEmpty,!username.isEmpty,!password.isEmpty,password.count>=6 else{
+            return CreateAccAlert()
+        }
+    }
     
+    func CreateAccAlert(){
+        let alert = UIAlertController(title: "Test", message: "Under development testing alert", preferredStyle: .alert)
+        present(alert,animated: true)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+    }
     override func viewDidLayoutSubviews(){
         let size = view.width/2
         imageView.frame = CGRect(x: (view.width)/4, y: 120, width: size, height: size)
@@ -108,6 +133,11 @@ class Register_Ctrl: UIViewController {
                                      y: UsernameField.bottom+10,
                                      width: view.width-60,
                                      height: 52)
+        
+        Ca_button.frame = CGRect(x: 30, 
+                                 y: passwordField.bottom+20,
+                                 width: view.width-60,
+                                 height: 52)
         
    }
 }
