@@ -9,6 +9,12 @@ import UIKit
 
 class Register_Ctrl: UIViewController {
     
+    private let scrollView: UIScrollView = {
+        let scrollview = UIScrollView()
+        scrollview.clipsToBounds = true
+        
+       return scrollview
+    }()
     
     private let imageView: UIImageView = {
        let imageView = UIImageView(image: UIImage(named: "Logo"))
@@ -38,6 +44,7 @@ class Register_Ctrl: UIViewController {
         return email
     }()
     
+    //Username
     private let UsernameField: UITextField = {
        let username = UITextField()
         username.placeholder = "Username"
@@ -54,6 +61,7 @@ class Register_Ctrl: UIViewController {
         return username
     }()
     
+    //Password
     private let passwordField: UITextField = {
         let password = UITextField()
         password.autocorrectionType = .no
@@ -69,7 +77,7 @@ class Register_Ctrl: UIViewController {
         password.attributedPlaceholder = placeholder
         return password
     }()
-    
+    //Create Account button
     private let Ca_button: UIButton = {
        let button = UIButton()
         button.setTitle("Continue", for: .normal)
@@ -80,6 +88,20 @@ class Register_Ctrl: UIViewController {
         return button
     }()
     
+    private let Rights: UIImageView = {
+        let image = UIImageView(image: UIImage(named: "git_logo"))
+        image.backgroundColor = .white
+        image.layer.cornerRadius = 15
+        return image
+    }()
+    
+    private let footer: UILabel = {
+       let text = UILabel()
+        text.text = " © 2024 Rhythm-dhaliwal, Inc.All rights reserved."
+        text.font = UIFont.systemFont(ofSize: 14)
+        text.textColor = .systemGray
+        return text
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,16 +112,21 @@ class Register_Ctrl: UIViewController {
         passwordField.delegate = self
         
         Ca_button.addTarget(self, action: #selector(createAccountButtonTapped), for: .touchUpInside)
-        //Add SubViews
         
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: 1000)
+        
+        //Add SubViews
         view.frame = view.bounds
-        view.addSubview(imageView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(imageView)
         view.addSubview(background)
         view.sendSubviewToBack(background)
-        view.addSubview(EmailField)
-        view.addSubview(UsernameField)
-        view.addSubview(passwordField)
-        view.addSubview(Ca_button)
+        scrollView.addSubview(EmailField)
+        scrollView.addSubview(UsernameField)
+        scrollView.addSubview(passwordField)
+        scrollView.addSubview(Ca_button)
+        scrollView.addSubview(Rights)
+        scrollView.addSubview(footer)
     }
     
     @objc func createAccountButtonTapped(){
@@ -114,9 +141,10 @@ class Register_Ctrl: UIViewController {
         present(alert,animated: true)
         alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
     }
+    
     override func viewDidLayoutSubviews(){
         let size = view.width/2
-        imageView.frame = CGRect(x: (view.width)/4, y: 120, width: size, height: size)
+        imageView.frame = CGRect(x: (view.width)/4, y: 10, width: size, height: size)
         background.frame = view.bounds
         
         EmailField.frame = CGRect(x: 30,
@@ -135,10 +163,20 @@ class Register_Ctrl: UIViewController {
                                      height: 52)
         
         Ca_button.frame = CGRect(x: 30, 
-                                 y: passwordField.bottom+20,
+                                 y: passwordField.bottom+60,
                                  width: view.width-60,
                                  height: 52)
         
+        scrollView.frame = CGRect(x: 0, 
+                                  y: 90,
+                                  width: view.width,
+                                  height: view.height)
+        
+        Rights.frame = CGRect(x: (scrollView.width-40)/2,
+                              y: 700,
+                              width: 40,
+                              height: 40)
+        footer.frame = CGRect(x: scrollView.width/10, y: Rights.bottom+20, width: scrollView.width-60, height: 20)
    }
 }
 extension Register_Ctrl: UITextFieldDelegate {

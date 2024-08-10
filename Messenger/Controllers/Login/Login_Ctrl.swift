@@ -8,6 +8,10 @@
 import UIKit
 
 class Login_Ctrl: UIViewController {
+    private let background_img:UIImageView = {
+        let imageview = UIImageView(image: UIImage(named: "background"))
+        return imageview
+    }()
     // Logo func
     private let imageView : UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "Logo"))
@@ -19,19 +23,22 @@ class Login_Ctrl: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
+        
         return scrollView
     }()
     
     //email input
     private let emailField : UITextField = {
         let field = UITextField()
+        field.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
         field.returnKeyType = .continue
         field.layer.cornerRadius = 12
-        field.layer.borderWidth = 1
+        field.layer.borderWidth = 0.5
         field.layer.borderColor = UIColor.black.cgColor
-        field.placeholder = "Email Address..."
+        let placeholder = NSAttributedString(string: "Username or email address", attributes: [NSAttributedString.Key.foregroundColor:UIColor.lightGray])
+        field.attributedPlaceholder = placeholder
         return field
     }()
     
@@ -41,19 +48,22 @@ class Login_Ctrl: UIViewController {
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
         field.returnKeyType = .done
-        field.placeholder = "Password..."
+        let placeholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor:UIColor.lightGray])
+        field.attributedPlaceholder = placeholder
         field.layer.cornerRadius = 12
-        field.layer.borderWidth = 1
+        field.layer.borderWidth = 0.5
         field.layer.borderColor = UIColor.black.cgColor
         field.returnKeyType = .continue
         field.isSecureTextEntry = true
+        field.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        
         return field
     }()
     
     private let Login_button: UIButton = {
       let button = UIButton()
         button.setTitle("Log In", for: .normal)
-        button.backgroundColor = .systemGreen
+        button.backgroundColor = .link
         button.layer.cornerRadius = 12
         button.setTitleColor(.white, for: .normal)
         button.layer.masksToBounds = true
@@ -61,6 +71,19 @@ class Login_Ctrl: UIViewController {
         return button
     }()
     
+    private let Rights:UIImageView = {
+       let image = UIImageView(image: UIImage(named: "git_logo"))
+        image.backgroundColor = .white
+        image.layer.cornerRadius = 15
+        return image
+    }()
+    private let footer: UILabel = {
+        let text = UILabel()
+        text.text = " © 2024 Rhythm-dhaliwal, Inc.All rights reserved."
+        text.font = UIFont.systemFont(ofSize: 14)
+        text.textColor = UIColor.systemGray
+        return text
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,12 +100,19 @@ class Login_Ctrl: UIViewController {
         
         emailField.delegate = self
         passwordField.delegate = self
+        
+        scrollView.contentSize = CGSize(width: view.width, height: 1000)
+        
         //Add SubViews
+        view.addSubview(background_img)
+        view.bringSubviewToFront(background_img)
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
         scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(Login_button)
+        scrollView.addSubview(Rights)
+        scrollView.addSubview(footer)
         scrollView.frame = view.bounds
         
        
@@ -90,10 +120,16 @@ class Login_Ctrl: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let size = view.width/2
-        imageView.frame = CGRect(x: (view.width)/4,
+        
+        imageView.frame = CGRect(x: (view.width-size)/2,
                                  y: 20,
                                  width: size,
                                  height: size)
+        
+        scrollView.frame = CGRect(x: 0,
+                                  y: 90,
+                                  width: view.width,
+                                  height: view.height)
         
         emailField.frame = CGRect(x: 30,
                                   y: imageView.bottom+10,
@@ -106,10 +142,16 @@ class Login_Ctrl: UIViewController {
                                 height: 52)
         
         Login_button.frame = CGRect(x: 30,
-                                     y: passwordField.bottom+10,
+                                     y: passwordField.bottom+60,
                                      width: scrollView.width-60,
                                      height: 52)
         
+        Rights.frame = CGRect(x: (scrollView.width-40)/2,
+                              y: 700,
+                              width: 40,
+                              height: 40)
+        
+        footer.frame = CGRect(x: scrollView.width/10, y: Rights.bottom+20, width: scrollView.width-60, height: 40)
     }
     
     //Login Button
