@@ -39,6 +39,7 @@ class Login_Ctrl: UIViewController {
         field.layer.borderColor = UIColor.black.cgColor
         let placeholder = NSAttributedString(string: "Username or email address", attributes: [NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         field.attributedPlaceholder = placeholder
+        field.textColor = .lightGray
         return field
     }()
     
@@ -56,6 +57,7 @@ class Login_Ctrl: UIViewController {
         field.returnKeyType = .continue
         field.isSecureTextEntry = true
         field.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        field.textColor = .lightGray
         
         return field
     }()
@@ -77,6 +79,7 @@ class Login_Ctrl: UIViewController {
         image.layer.cornerRadius = 15
         return image
     }()
+    
     private let footer: UILabel = {
         let text = UILabel()
         text.text = " © 2024 Rhythm-dhaliwal, Inc.All rights reserved."
@@ -84,6 +87,7 @@ class Login_Ctrl: UIViewController {
         text.textColor = UIColor.systemGray
         return text
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -114,7 +118,6 @@ class Login_Ctrl: UIViewController {
         scrollView.addSubview(Rights)
         scrollView.addSubview(footer)
         scrollView.frame = view.bounds
-        
        
     }
     override func viewDidLayoutSubviews() {
@@ -132,7 +135,7 @@ class Login_Ctrl: UIViewController {
                                   height: view.height)
         
         emailField.frame = CGRect(x: 30,
-                                  y: imageView.bottom+10,
+                                  y: imageView.bottom+50,
                                   width: scrollView.width-60,
                                   height: 52)
         
@@ -156,6 +159,8 @@ class Login_Ctrl: UIViewController {
     
     //Login Button
     @objc private func LoginButtonTapped(){
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder() 
         guard let email = emailField.text, let password = passwordField.text,
               !email.isEmpty,!password.isEmpty,password.count >= 6 else {
                 AlertLogin()

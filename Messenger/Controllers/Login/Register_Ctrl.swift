@@ -17,7 +17,8 @@ class Register_Ctrl: UIViewController {
     }()
     
     private let imageView: UIImageView = {
-       let imageView = UIImageView(image: UIImage(named: "Logo"))
+       let imageView = UIImageView(image: UIImage(systemName:"person.crop.circle"))
+        imageView.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -97,7 +98,7 @@ class Register_Ctrl: UIViewController {
     
     private let footer: UILabel = {
        let text = UILabel()
-        text.text = " © 2024 Rhythm-dhaliwal, Inc.All rights reserved."
+        text.text = "© 2024 Rhythm-dhaliwal, Inc.All rights reserved."
         text.font = UIFont.systemFont(ofSize: 14)
         text.textColor = .systemGray
         return text
@@ -127,9 +128,24 @@ class Register_Ctrl: UIViewController {
         scrollView.addSubview(Ca_button)
         scrollView.addSubview(Rights)
         scrollView.addSubview(footer)
+        imageView.isUserInteractionEnabled = true
+        scrollView.isUserInteractionEnabled = true
+        let guesture = UITapGestureRecognizer(target: self, action: #selector(ProfilePicButton))
+        imageView.addGestureRecognizer(guesture)
+        
     }
     
+    @objc private func ProfilePicButton(){
+        print("Profile button tapped")
+    }
+    
+    
     @objc func createAccountButtonTapped(){
+        
+        EmailField.resignFirstResponder()
+        UsernameField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        
         guard let email = EmailField.text , let username = UsernameField.text
                 ,let password = passwordField.text,!email.isEmpty,!username.isEmpty,!password.isEmpty,password.count>=6 else{
             return CreateAccAlert()
@@ -143,12 +159,12 @@ class Register_Ctrl: UIViewController {
     }
     
     override func viewDidLayoutSubviews(){
-        let size = view.width/2
-        imageView.frame = CGRect(x: (view.width)/4, y: 10, width: size, height: size)
+       
+        imageView.frame = CGRect(x: (view.width)/3, y: 10, width: 150, height: 150)
         background.frame = view.bounds
         
         EmailField.frame = CGRect(x: 30,
-                                  y: imageView.bottom+10,
+                                  y: imageView.bottom+50,
                                   width: view.width-60,
                                   height: 52)
         
@@ -176,9 +192,15 @@ class Register_Ctrl: UIViewController {
                               y: 700,
                               width: 40,
                               height: 40)
-        footer.frame = CGRect(x: scrollView.width/10, y: Rights.bottom+20, width: scrollView.width-60, height: 20)
+        
+        footer.frame = CGRect(x: scrollView.width/10,
+                              y: Rights.bottom+20,
+                              width: scrollView.width-60,
+                              height: 20)
+        
    }
 }
+
 extension Register_Ctrl: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == EmailField {
@@ -186,6 +208,9 @@ extension Register_Ctrl: UITextFieldDelegate {
         }
         else if textField == UsernameField{
             passwordField.becomeFirstResponder()
+        }
+        else if textField == passwordField{
+            createAccountButtonTapped()
         }
         return true
     }
