@@ -95,10 +95,15 @@ class Login_Ctrl: UIViewController {
         view.backgroundColor = .white
         title = "Log In"
         //register button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
+       let barButton = UIBarButtonItem(title: "Register",
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didTapRegister))
+        
+        barButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+        
+        
+        self.navigationItem.rightBarButtonItem = barButton
         
         Login_button.addTarget(self, action: #selector(LoginButtonTapped), for: .touchUpInside)
         

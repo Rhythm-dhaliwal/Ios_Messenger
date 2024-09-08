@@ -122,6 +122,9 @@ class Register_Ctrl: UIViewController {
         
         scrollView.contentSize = CGSize(width: view.frame.size.width, height: 1000)
         
+        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backbutton))
+        backButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.black], for: .normal)
+        self.navigationItem.leftBarButtonItem = backButton
         //Add SubViews
         view.frame = view.bounds
         view.addSubview(scrollView)
@@ -145,6 +148,9 @@ class Register_Ctrl: UIViewController {
        presentPhotoActionSheet()
     }
     
+    @objc func backbutton(){
+        navigationController?.popViewController(animated: true)
+    }
     
     @objc func createAccountButtonTapped(){
         
@@ -224,7 +230,7 @@ extension Register_Ctrl: UITextFieldDelegate {
 extension Register_Ctrl: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     // func for the alert that occur when we select input for profile picture
     func presentPhotoActionSheet(){
-        let Actionsheet = UIAlertController(title: "Profile Picture", message: "Please select from below", preferredStyle: .actionSheet)
+        let Actionsheet = UIAlertController(title: "Profile Picture", message: "Please select from below", preferredStyle: .alert)
         
         Actionsheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
