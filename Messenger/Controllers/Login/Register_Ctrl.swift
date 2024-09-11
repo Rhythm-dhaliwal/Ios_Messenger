@@ -230,7 +230,7 @@ extension Register_Ctrl: UITextFieldDelegate {
 extension Register_Ctrl: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     // func for the alert that occur when we select input for profile picture
     func presentPhotoActionSheet(){
-        let Actionsheet = UIAlertController(title: "Profile Picture", message: "Please select from below", preferredStyle: .alert)
+        let Actionsheet = UIAlertController(title: "Profile Picture", message: "Please select from below", preferredStyle: .actionSheet)
         
         Actionsheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         

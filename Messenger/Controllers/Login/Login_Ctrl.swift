@@ -110,7 +110,7 @@ class Login_Ctrl: UIViewController {
         emailField.delegate = self
         passwordField.delegate = self
         
-        scrollView.contentSize = CGSize(width: view.width, height: 1000)
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: 1000)
         
         //Add SubViews
         view.addSubview(background_img)
