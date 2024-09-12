@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class Register_Ctrl: UIViewController {
     
     private let scrollView: UIScrollView = {
@@ -162,7 +162,20 @@ class Register_Ctrl: UIViewController {
                 ,let password = passwordField.text,!email.isEmpty,!username.isEmpty,!password.isEmpty,password.count>=6 else{
             return CreateAccAlert()
         }
+        // firebase login
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {AuthDataResult,error in
+            guard let result = AuthDataResult,error == nil else {
+                print("error occured")
+                return
+            }
+            
+            let user = result.user
+            print("created user: \(user)")
+           
+        })
+        
     }
+   
     
     func CreateAccAlert(){
         let alert = UIAlertController(title: "Test", message: "Under development testing alert", preferredStyle: .alert)
