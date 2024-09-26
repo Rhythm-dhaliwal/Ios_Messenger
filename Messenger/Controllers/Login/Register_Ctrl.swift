@@ -185,28 +185,28 @@ class Register_Ctrl: UIViewController {
     
     override func viewDidLayoutSubviews(){
        
-        imageView.frame = CGRect(x: (view.width)/3, y: 10, width: 150, height: 150)
+        imageView.frame = CGRect(x: (view.width)/3-11, y: 0, width: 150, height: 150)
         background.frame = view.bounds
         
-        EmailField.frame = CGRect(x: 30,
+        EmailField.frame = CGRect(x: 10,
                                   y: imageView.bottom+50,
-                                  width: view.width-60,
-                                  height: 52)
+                                  width: view.width-20,
+                                  height: 45)
         
-        UsernameField.frame = CGRect(x: 30,
+        UsernameField.frame = CGRect(x: 10,
                                      y: EmailField.bottom+10,
-                                     width: view.width-60,
-                                     height: 52)
+                                     width: view.width-20,
+                                     height: 45)
         
-        passwordField.frame = CGRect(x: 30, 
+        passwordField.frame = CGRect(x: 10,
                                      y: UsernameField.bottom+10,
-                                     width: view.width-60,
-                                     height: 52)
+                                     width: view.width-20,
+                                     height: 45)
         
-        Ca_button.frame = CGRect(x: 30, 
+        Ca_button.frame = CGRect(x: 10,
                                  y: passwordField.bottom+60,
-                                 width: view.width-60,
-                                 height: 52)
+                                 width: view.width-20,
+                                 height: 45)
         
         scrollView.frame = CGRect(x: 0, 
                                   y: 90,
