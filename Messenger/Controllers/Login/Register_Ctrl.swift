@@ -162,23 +162,38 @@ class Register_Ctrl: UIViewController {
                 ,let password = passwordField.text,!email.isEmpty,!username.isEmpty,!password.isEmpty,password.count>=6 else{
             return CreateAccAlert()
         }
+        
         // firebase login
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {AuthDataResult,error in
-            guard let result = AuthDataResult,error == nil else {
-                print("error occured")
+        
+        DatabaseManager.shared.UserExists(with: email, completion: {[weak self] exists in
+            guard let strongSelf = self else {
                 return
             }
+            guard !exists else{
+                strongSelf.CreateAccAlert(message: "User with this email address already exists")
+                return
             
-            let user = result.user
-            print("created user: \(user)")
-           
+        }
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {AuthDataResult,error in
+                
+                guard AuthDataResult != nil, error == nil else {
+                    print("error occured")
+                    return
+                }
+                DatabaseManager.shared.insertuser(with: ChatAppUser(emailAddress: email, Username: username, password: password))
+                strongSelf.navigationController?.dismiss(animated: true )
+            })
+            
         })
-        
+      
     }
    
     
-    func CreateAccAlert(){
-        let alert = UIAlertController(title: "Test", message: "Under development testing alert", preferredStyle: .alert)
+    func CreateAccAlert(message: String = "Under development testing alert"){
+        let alert = UIAlertController(title: "Test",
+                                      message: message,
+                                      preferredStyle: .alert)
+        
         present(alert,animated: true)
         alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
     }

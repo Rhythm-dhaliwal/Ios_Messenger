@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class Login_Ctrl: UIViewController {
     private let background_img:UIImageView = {
@@ -171,11 +172,23 @@ class Login_Ctrl: UIViewController {
                 AlertLogin()
             return
         }
+        //FireBase Code here--
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: {[weak self] AuthDataResult, error in
+            guard let strongSelf = self else{
+                return
+            }
+            guard let result = AuthDataResult , error == nil else {
+                print("failed to login with email: \(email)")
+                return
+            }
+            let user = result.user
+            print("Logged in with user: \(user)")
+            strongSelf.navigationController?.dismiss(animated: true)
+        })
     
     }
     
-    //FireBase Code here--
-    
+   
     //Login Alert
     func AlertLogin(){
         let alert = UIAlertController(title: "Wrong password", message: "The password you have entered is wrong. Please try again.", preferredStyle: .alert)

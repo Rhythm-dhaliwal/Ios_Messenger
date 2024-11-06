@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class Convo_Ctrl: UIViewController {
 
@@ -13,22 +14,22 @@ class Convo_Ctrl: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemMint
         
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        validate();
         
-        
-        let IsLoggedIn = UserDefaults.standard.bool(forKey: "Logged_in")
-        
-        if(!IsLoggedIn){
+    }
+    private func validate(){
+        if(FirebaseAuth.Auth.auth().currentUser == nil){
             let vc = Login_Ctrl()
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
-            present(nav, animated: true)
+            present(nav, animated: false)
         }
     }
-
 
 }
 
