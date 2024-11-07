@@ -179,10 +179,12 @@ class Login_Ctrl: UIViewController {
             }
             guard let result = AuthDataResult , error == nil else {
                 print("failed to login with email: \(email)")
+                strongSelf.AlertLogin()
                 return
             }
             let user = result.user
             print("Logged in with user: \(user)")
+            
             strongSelf.navigationController?.dismiss(animated: true)
         })
     
@@ -191,10 +193,10 @@ class Login_Ctrl: UIViewController {
    
     //Login Alert
     func AlertLogin(){
-        let alert = UIAlertController(title: "Wrong password", message: "The password you have entered is wrong. Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Wrong password", message: "The Username or Password you have entered is wrong. Please try again.", preferredStyle: .alert)
         
         present(alert,animated: true)
-        alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Close", style: .destructive, handler: nil))
        
     }
     //Register

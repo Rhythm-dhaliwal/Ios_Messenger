@@ -16,7 +16,7 @@ class DatabaseManager {
 extension DatabaseManager{
     public func UserExists(with email: String,completion: @escaping (Bool) -> Void){
         
-        var safeEmail = email.replacingOccurrences(of: ".", with: "_")
+        let safeEmail = email.replacingOccurrences(of: ".", with: "_")
         database.child(safeEmail).observeSingleEvent(of: .value, with: {DataSnapshot in
             guard DataSnapshot.value as? String != nil else{
                 completion(false)
@@ -39,7 +39,7 @@ struct ChatAppUser{
     let password: String
     //let ProfilePic: String
     var safeEmail: String{
-        var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "_")
+        let safeEmail = emailAddress.replacingOccurrences(of: ".", with: "_")
         return safeEmail
     }
 }
