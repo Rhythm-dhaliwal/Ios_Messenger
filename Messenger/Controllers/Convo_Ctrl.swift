@@ -31,7 +31,7 @@ class Convo_Ctrl: UIViewController {
             let vc = Login_Ctrl()
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
-            present(nav, animated: true)
+            present(nav, animated: false)
         }
     }
 
