@@ -7,8 +7,13 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class Login_Ctrl: UIViewController {
+    
+    private let spinner = JGProgressHUD(style : .light)
+    
+    
     private let background_img:UIImageView = {
         let imageview = UIImageView(image: UIImage(named: "background"))
         return imageview
@@ -160,7 +165,12 @@ class Login_Ctrl: UIViewController {
                               width: 40,
                               height: 40)
         
-        footer.frame = CGRect(x: scrollView.width/10, y: Rights.bottom+20, width: scrollView.width-60, height: 40)
+        footer.frame = CGRect(x: scrollView.width/10,
+                              y: Rights.bottom+20,
+                              width: scrollView.width-60,
+                              height: 40)
+        
+        
     }
     
     //Login Button
@@ -172,11 +182,19 @@ class Login_Ctrl: UIViewController {
                 AlertLogin()
             return
         }
+        
+        spinner.show(in: view)
         //FireBase Code here--
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: {[weak self] AuthDataResult, error in
+            
             guard let strongSelf = self else{
                 return
             }
+           
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
+            }
+            
             guard let result = AuthDataResult , error == nil else {
                 print("failed to login with email: \(email)")
                 strongSelf.AlertLogin()
