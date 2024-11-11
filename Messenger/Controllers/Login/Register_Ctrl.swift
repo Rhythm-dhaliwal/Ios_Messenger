@@ -165,6 +165,7 @@ class Register_Ctrl: UIViewController {
         
         // firebase login
         
+        
         DatabaseManager.shared.UserExists(with: email, completion: {[weak self] exists in
             guard let strongSelf = self else {
                 return
@@ -178,6 +179,7 @@ class Register_Ctrl: UIViewController {
                 
                 guard AuthDataResult != nil, error == nil else {
                     print("error occured")
+                    strongSelf.CreateAccAlert(message: "User with this email address already exists")
                     return
                 }
                 DatabaseManager.shared.insertuser(with: ChatAppUser(emailAddress: email, Username: username, password: password))
@@ -190,7 +192,7 @@ class Register_Ctrl: UIViewController {
    
     
     func CreateAccAlert(message: String = "Under development testing alert"){
-        let alert = UIAlertController(title: "Test",
+        let alert = UIAlertController(title: "Error",
                                       message: message,
                                       preferredStyle: .alert)
         
