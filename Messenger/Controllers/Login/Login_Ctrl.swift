@@ -8,6 +8,8 @@
 import UIKit
 import FirebaseAuth
 import JGProgressHUD
+import GoogleSignIn
+import Firebase
 
 class Login_Ctrl: UIViewController {
     
@@ -29,8 +31,20 @@ class Login_Ctrl: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
-        
         return scrollView
+    }()
+    
+    //Google signIn
+    private let googleSignInButton : GIDSignInButton = {
+        let button = GIDSignInButton()
+        button.style = .wide
+        button.translatesAutoresizingMaskIntoConstraints = true
+        button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
+        
+        
+        
+        return button
     }()
     
     //email input
@@ -118,6 +132,8 @@ class Login_Ctrl: UIViewController {
         
         scrollView.contentSize = CGSize(width: view.frame.size.width, height: 1000)
         
+        setupUI()
+       // setupGoogleSignIn()
         //Add SubViews
         view.addSubview(background_img)
         view.bringSubviewToFront(background_img)
@@ -128,7 +144,10 @@ class Login_Ctrl: UIViewController {
         scrollView.addSubview(Login_button)
         scrollView.addSubview(Rights)
         scrollView.addSubview(footer)
+        scrollView.addSubview(googleSignInButton)
         scrollView.frame = view.bounds
+        
+        
        
     }
     override func viewDidLayoutSubviews() {
@@ -160,6 +179,11 @@ class Login_Ctrl: UIViewController {
                                      width: scrollView.width-20,
                                      height: 45)
         
+        googleSignInButton.frame = CGRect(x: 10,
+                                          y: Login_button.bottom+10,
+                                          width: scrollView.width-20,
+                                          height: 45)
+        
         Rights.frame = CGRect(x: (scrollView.width-40)/2,
                               y: 700,
                               width: 40,
@@ -171,8 +195,70 @@ class Login_Ctrl: UIViewController {
                               height: 40)
         
         
+        
     }
     
+    private func setupUI(){
+        
+        googleSignInButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setupGoogleSignIn(){
+        //configure GIDsignIn
+        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: "905822023549-0ou13nu0701s44dnnp6scg4ttuiammjf.apps.googleusercontent.com")
+    }
+    
+    @objc private func signInButtonTapped() {
+           signIn()
+       }
+    
+    private func signIn() {
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        // Start the sign in flow!
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { [weak self] result, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = result?.user,
+                  let idToken = user.idToken?.tokenString else {
+                print("Error: Missing user or token")
+                return
+            }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: user.accessToken.tokenString)
+            
+            // Sign in with Firebase
+            Auth.auth().signIn(with: credential) { result, error in
+                if let error = error {
+                    print("Firebase sign in error: \(error.localizedDescription)")
+                    return
+                }
+                
+                // User is signed in
+                // Navigate to your app's main screen
+                self.handleSuccessfulSignIn()
+            }
+        }
+    }
+       
+        func handleSuccessfulSignIn() {
+           // Handle successful sign in - e.g., navigate to main screen
+           let mainVC = Convo_Ctrl() // Your main view controller
+           mainVC.modalPresentationStyle = .fullScreen
+           present(mainVC, animated: true)
+       }
+       
+   
     //Login Button
     @objc private func LoginButtonTapped(){
         emailField.resignFirstResponder()
