@@ -86,7 +86,7 @@ extension Convo_Ctrl: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        cell?.textLabel?.text = "Hello World"
+        cell?.textLabel?.text = "Test"
         
         return cell!
     }
@@ -94,7 +94,7 @@ extension Convo_Ctrl: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         TableView.deselectRow(at: indexPath, animated: true)
         let vc = Chat_Ctrl()
-        vc.title = "Jenny Smith"
+        vc.title = "Rhythm Dhaliwal"
         vc.navigationItem.largeTitleDisplayMode = .never
         
         navigationController?.pushViewController(vc, animated: true)

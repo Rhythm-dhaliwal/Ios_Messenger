@@ -26,7 +26,7 @@ class Chat_Ctrl: MessagesViewController {
     private var messages = [Message]()
     private let selfSender = Sender(PhotoURL: ""
                                     , senderId: "1"
-                                    , displayName: "Samiksha")
+                                    , displayName: "Test")
     
     
     override func viewDidLoad() {
@@ -36,12 +36,12 @@ class Chat_Ctrl: MessagesViewController {
         messages.append(Message(sender: selfSender
                                 , messageId: "1"
                                 , sentDate: Date()
-                                , kind: .text("Hello world")))
+                                , kind: .text("Test")))
         
         messages.append(Message(sender: selfSender
                                 , messageId: "1"
                                 , sentDate: Date()
-                                , kind: .text("Hey rhythm im so sorry for what i did can we have a fresh start as i started to fall for you now.")))
+                                , kind: .text("This is a test messeage for demo preview.")))
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self

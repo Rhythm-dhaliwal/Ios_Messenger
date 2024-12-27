@@ -190,7 +190,7 @@ class Register_Ctrl: UIViewController {
                     strongSelf.CreateAccAlert(message: "User with this email address already exists")
                     return
                 }
-                DatabaseManager.shared.insertuser(with: ChatAppUser(emailAddress: email, Username: username, password: password))
+                DatabaseManager.shared.insertuser(with: ChatAppUser(emailAddress: email, Username: username))
                 strongSelf.navigationController?.dismiss(animated: true )
             })
             
