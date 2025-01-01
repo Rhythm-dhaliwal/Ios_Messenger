@@ -35,15 +35,14 @@ class Login_Ctrl: UIViewController {
     }()
     
     //Google signIn
-    private let googleSignInButton : GIDSignInButton = {
-        let button = GIDSignInButton()
-        button.style = .wide
-        button.translatesAutoresizingMaskIntoConstraints = true
+    private let googleSignInButton : UIButton = {
+        let button = UIButton()
+        //button.translatesAutoresizingMaskIntoConstraints = true
         button.layer.cornerRadius = 12
+        button.backgroundColor = .white
+        button.setTitle("Sign In with Google", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.layer.masksToBounds = true
-        
-        
-        
         return button
     }()
     
@@ -253,9 +252,11 @@ class Login_Ctrl: UIViewController {
        
         func handleSuccessfulSignIn() {
            // Handle successful sign in - e.g., navigate to main screen
-           let mainVC = Convo_Ctrl() // Your main view controller
-           mainVC.modalPresentationStyle = .fullScreen
-           present(mainVC, animated: true)
+//           let mainVC = Convo_Ctrl() // Your main view controller
+//            let nav = UINavigationController(rootViewController: mainVC)
+//           nav.modalPresentationStyle = .fullScreen
+//           present(nav, animated: true)
+            navigationController?.dismiss(animated: true)
        }
        
    
